@@ -79,9 +79,9 @@ AddMyBTagWeights::AddMyBTagWeights(const edm::ParameterSet& iConfig):
 jetSrc_(iConfig.getParameter<edm::InputTag>("jetSrc"))
 {
    //register your products
-	histFile = new TFile("/user/hoehle/CMSSW/CMSSW_SpinCorrFWK/CMSSW_NTuple_Analysis/CMSSW_4_2_8_patch7/src/MiniTreeAnalysis/NTupleAnalysis/macros/data/efficacite_btag.root");btagHist =  new TH2D("btagHist","",3,1,2,3,1,2);
+	histFile = new TFile((std::string(getenv("CMSSW_BASE"))+ std::string("/src/CMSSW_MyProducers/AddMyBTagWeights/input/efficacite_btag.root")).c_str());btagHist =  new TH2D("btagHist","",3,1,2,3,1,2);
   histFile->GetObject("h_MISTAGCSVL_BTAGLEFFCORR",btagHist);
-	btagEffBTagFile = new TFile("/user/hoehle/CMSSW/CMSSW_SpinCorrFWK/CMSSW_NTuple_Analysis/CMSSW_4_2_8_patch7/src/MiniTreeAnalysis/NTupleAnalysis/macros/data/eff_from_ttmadgraph_summer11_multiwp.root");
+	btagEffBTagFile = new TFile((std::string(getenv("CMSSW_BASE"))+ std::string("/src/CMSSW_MyProducers/AddMyBTagWeights/input/eff_from_ttmadgraph_summer11_multiwp.root")).c_str());
   h_eff_cq = new TH2F("h_eff_cq","",1,2,3,1,2,3); h_eff_lq = new TH2F("h_eff_lq","",1,2,3,1,2,3); h_eff_bq  = new TH2F("h_eff_bq","",1,2,3,1,2,3);
   btagEffBTagFile->GetObject("algo_6_discri_0.244/h_eff_cq;1",h_eff_cq); btagEffBTagFile->GetObject("algo_6_discri_0.244/h_eff_bq;1",h_eff_bq); btagEffBTagFile->GetObject("algo_6_discri_0.244/h_eff_lq;1",h_eff_lq);
    produces<std::vector<pat::Jet> >();
