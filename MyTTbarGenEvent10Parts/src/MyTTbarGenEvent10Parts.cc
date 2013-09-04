@@ -170,9 +170,11 @@ MyTTbarGenEvent10Parts::produce(edm::Event& iEvent, const edm::EventSetup& iSetu
    for(reco::GenParticleCollection::const_iterator mcIter=genParticles->begin(); mcIter != genParticles->end(); mcIter++,i++){
 	if(mcIter->pdgId() == 6 && firstParticleInChain(&(*mcIter)) > 0){
 		//ParticlePrint(&(*mcIter));
+                 edm::LogInfo  ("topSearching")<<"this is first top "<<mcIter->px();
 		tops = MyTTbarGenEvent10Parts::ParticleChain(&(*mcIter));
    	}
    	if(mcIter->pdgId() == -6 && firstParticleInChain(&(*mcIter)) > 0){
+                edm::LogInfo  ("topSearching")<<"this is first antitop "<<mcIter->px();
 		antitops = MyTTbarGenEvent10Parts::ParticleChain(&(*mcIter));
 	}
    }
@@ -187,17 +189,18 @@ MyTTbarGenEvent10Parts::produce(edm::Event& iEvent, const edm::EventSetup& iSetu
    // tops okay?
    bool findThis=false;
    bool forAllOkay=true;
-   if(tops.size() == 0 || antitops.size() == 0){ forAllOkay=false; std::cout<<"top size "<< tops.size() <<" antitop size "<< antitops.size() <<std::endl;}
+   if(tops.size() == 0 || antitops.size() == 0){ forAllOkay=false; edm::LogInfo  ("topSizes")<<"top size "<< tops.size() <<" antitop size "<< antitops.size();}
    else{
    	for(unsigned int i = 0; i < tops[0]->numberOfMothers(); ++i){
 		findThis=false;
+                edm::LogInfo  ("topMother")<<"mother top "<<i<<" "<<tops[0]->mother(i)->px();
 		for(unsigned int j = 0; j < antitops[0]->numberOfMothers(); ++j){
 			if( tops[0]->mother(i) == antitops[0]->mother(j)){ 
 				findThis=true;
 				break;
 			}
 		}
-                if (!findThis) std::cout<<"mother check "<< i << "not found"<<std::endl;
+                if (!findThis) edm::LogInfo  ("topMother")<<"mother check "<< i << "not found";
 		forAllOkay=forAllOkay&&findThis;
    	}
    }
@@ -300,7 +303,7 @@ MyTTbarGenEvent10Parts::produce(edm::Event& iEvent, const edm::EventSetup& iSetu
 
         } 
    }
-   else std::cout<<"not found: tops are not okay"<<std::endl;
+   else edm::LogInfo  ("topError")<<"not found ERROR: tops are not okay";
    iEvent.put(pOut);
 
 /* this is an EventSetup example
