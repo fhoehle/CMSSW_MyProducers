@@ -167,7 +167,7 @@ AddPileUpWeightsProducer::produce(edm::Event& iEvent, const edm::EventSetup& iSe
    edm::LogInfo   ("lumiweights")<<iEvent.id ().run()<<"  lumi "<< iEvent.id ().luminosityBlock ()<<" event "<<iEvent.id ().event()<<" MyWeightIT_npIT "<<MyWeightIT_npIT<<std::endl; weights.push_back(MyWeightIT_npIT);
    edm::LogInfo   ("lumiweights")<<"PU weights "; for(unsigned int i = 0;i < weights.size();i++){edm::LogInfo   ("lumiweights")<<" "<<weights[i];} edm::LogInfo   ("lumiweights")<<" end "<<std::endl;
    std::auto_ptr< std::vector< double > > pOut (new std::vector<double>(weights));
-   edm::LogInfo   ("lumiweights")<<"PU pOut weights "; for(unsigned int i = 0;i < pOut->size();i++){std::cout<<" "<<(*pOut)[i];} std::cout<<" end "<<std::endl;
+   edm::LogInfo   ("lumiweights")<<"PU pOut weights "; for(unsigned int i = 0;i < pOut->size();i++){edm::LogInfo   ("lumiweights")<<" "<<(*pOut)[i];} edm::LogInfo   ("lumiweights")<<" end "<<std::endl;
    iEvent.put(pOut);
 
 

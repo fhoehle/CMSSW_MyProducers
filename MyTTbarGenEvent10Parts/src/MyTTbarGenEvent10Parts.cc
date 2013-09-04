@@ -187,7 +187,7 @@ MyTTbarGenEvent10Parts::produce(edm::Event& iEvent, const edm::EventSetup& iSetu
    // tops okay?
    bool findThis=false;
    bool forAllOkay=true;
-   if(tops.size() == 0 || antitops.size() == 0) forAllOkay=false;
+   if(tops.size() == 0 || antitops.size() == 0){ forAllOkay=false; std::cout<<"top size "<< tops.size() <<" antitop size "<< antitops.size() <<std::endl;}
    else{
    	for(unsigned int i = 0; i < tops[0]->numberOfMothers(); ++i){
 		findThis=false;
@@ -197,6 +197,7 @@ MyTTbarGenEvent10Parts::produce(edm::Event& iEvent, const edm::EventSetup& iSetu
 				break;
 			}
 		}
+                if (!findThis) std::cout<<"mother check "<< i << "not found"<<std::endl;
 		forAllOkay=forAllOkay&&findThis;
    	}
    }

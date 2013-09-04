@@ -143,14 +143,14 @@ AddMyBTagWeights::produce(edm::Event& iEvent, const edm::EventSetup& iSetup)
 	else {
 		//jetPt = jetPt >= 520 ? 519 : jetPt;
 		effbTag = h_eff_lq->GetBinContent( h_eff_lq->FindBin(jetPt,jetEta) );
-		std::cout<<" jetPt "<< jetPt <<" will be reduced to 199"<<std::endl;
+		edm::LogInfo("weightBtag") <<"jetPt"<< jetPt <<"will be reduced to 199";
 		weightBTag = btagHist->GetBinContent( btagHist->FindBin(jetPt,jetEta) ) ;// std::cout<<"weightBTag btagHist- "<<weightBTag<<std::endl;
 		jetPt = jetPt >= 200.0 ? 199.0 : jetPt;
 		effbTag = h_eff_lq->GetBinContent( h_eff_lq->FindBin(jetPt,jetEta) );
 	}
-	std::cout<<"weightBTag "<<weightBTag <<" effbTag "<<effbTag<<" jetPt "<<jetPt<<" jetEta "<<jetEta<<std::endl;
+	edm::LogInfo("weightBtag")<<"weightBTag "<<weightBTag <<" effbTag "<<effbTag<<" jetPt "<<jetPt<<" jetEta "<<jetEta;
 	totalWeight = weightBTag * effbTag; totalWeight = totalWeight > 1.0 ? 1.0 : totalWeight; totalWeight = totalWeight < 0.0 ? 0.0 : totalWeight;
-	proba_jetb.push_back(totalWeight); std::cout<<"Finally pt "<<jetPt<<" totalWeight "<<totalWeight<<std::endl;
+	proba_jetb.push_back(totalWeight); edm::LogInfo("weightBtag")<<"Finally pt "<<jetPt<<" totalWeight "<<totalWeight;
         newJet.addUserFloat("probBJet",totalWeight);newJets.push_back(newJet);
    }//
    //for (unsigned int i = 0; i < newJets.size(); i++){std::cout<<" "<<newJets[i].userFloat("probBJet")<<std::endl;}
@@ -159,7 +159,7 @@ AddMyBTagWeights::produce(edm::Event& iEvent, const edm::EventSetup& iSetup)
  
 
    // is put into the Event
-   std::cout<<"addBTagWeights bTag event weights "<<std::endl;
+   edm::LogInfo("weightBtag")<<"addBTagWeights bTag event weights ";
    btagWeights.resize(5);btagWeights[0]=1;btagWeights[1]=0;btagWeights[2]=0;btagWeights[3]=0;btagWeights[4]=0;
    // calculating probabilities
            float proba_0jet = 1.;
@@ -200,7 +200,7 @@ AddMyBTagWeights::produce(edm::Event& iEvent, const edm::EventSetup& iSetup)
             btagWeights[2]=proba_1jet;
             btagWeights[3]=proba_2jet;
             btagWeights[4]=proba_atleast3jet;
-	std::cout<<"btagWeights[0] "<<btagWeights[0]<<" btagWeights[1] "<<btagWeights[1]<< "  btagWeights[2] "<<btagWeights[2]<<" btagWeights[3] " <<btagWeights[3] << " btagWeights[4] "<<btagWeights[4]<<std::endl;
+	edm::LogInfo("weightBtag")<<"btagWeights[0] "<<btagWeights[0]<<" btagWeights[1] "<<btagWeights[1]<< "  btagWeights[2] "<<btagWeights[2]<<" btagWeights[3] " <<btagWeights[3] << " btagWeights[4] "<<btagWeights[4];
 
 //
 //   using namespace edm;

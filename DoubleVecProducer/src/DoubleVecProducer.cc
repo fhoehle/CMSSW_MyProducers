@@ -93,7 +93,7 @@ DoubleVecProducer::produce(edm::Event& iEvent, const edm::EventSetup& iSetup)
 {
    std::vector<double> weights;weights.push_back(1); 
    std::auto_ptr< std::vector< double > > pOut (new std::vector<double>(weights));
-   std::cout<<"PU pOut weights "; for(unsigned int i = 0;i < pOut->size();i++){std::cout<<" "<<(*pOut)[i];} std::cout<<" end "<<std::endl;
+   edm::LogInfo("DoubleVecProducerPutEvt")<<"PU pOut weights "; for(unsigned int i = 0;i < pOut->size();i++){edm::LogInfo("DoubleVecProducerPutEvt")<<" "<<(*pOut)[i];} edm::LogInfo("DoubleVecProducerPutEvt")<<" end "<<std::endl;
    iEvent.put(pOut);
 
 
