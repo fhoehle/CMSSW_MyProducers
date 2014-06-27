@@ -58,10 +58,10 @@ class AddPileUpWeightsProducer : public edm::EDProducer {
 	edm::InputTag vertexSrc_;
 
   edm::LumiReWeighting LumiWeights_;
-  std::string PileupFile1_;
-  std::string PileupFile2_;
-  std::string PUHistname2_;
-  std::string PUHistname1_;
+  std::string PileupFile1_ = "";
+  std::string PileupFile2_ = "";
+  std::string PUHistname1_ = "";
+  std::string PUHistname2_ = "";
 
       // ----------member data ---------------------------
 };
@@ -126,8 +126,8 @@ AddPileUpWeightsProducer::produce(edm::Event& iEvent, const edm::EventSetup& iSe
 
   float npT=-1.;
   float npIT=-1.;
-  float npBCm1IT = -1.0;
-  float npBCp1IT = -1.0;
+  //float npBCm1IT = -1.0;
+  //float npBCp1IT = -1.0;
   //
   ////std::cout << "pu summary 189 " << PupInfo->size() << std::endl;
   //// (then, for example, you can do)
@@ -147,18 +147,18 @@ AddPileUpWeightsProducer::produce(edm::Event& iEvent, const edm::EventSetup& iSe
   for(PVI = PupInfo->begin(); PVI != PupInfo->end(); ++PVI) {
 
     int BX = PVI->getBunchCrossing();
-    if (BX == -1) npBCm1IT = PVI->getPU_NumInteractions();
+    //if (BX == -1) npBCm1IT = PVI->getPU_NumInteractions();
     if(BX == 0) {
       npT = PVI->getTrueNumInteractions();
       npIT = PVI->getPU_NumInteractions();
     }
-    if (BX == 1) npBCp1IT = PVI->getPU_NumInteractions();
+    //if (BX == 1) npBCp1IT = PVI->getPU_NumInteractions();
   }
   edm::LogInfo   ("lumiweights") << "before calling LumiWeights";
   double MyWeight_npT = LumiWeights_.weight( npT );
   double MyWeight_npIT = LumiWeights_.weight( npIT );
   double MyWeightIT_npIT = LumiWeights_.weight(npIT );
-  double MyWeight_npavIT = LumiWeights_.weight( float((npBCm1IT+npIT+npBCp1IT)/3.0) );
+  //double MyWeight_npavIT = LumiWeights_.weight( float((npBCm1IT+npIT+npBCp1IT)/3.0) );
   edm::LogInfo   ("lumiweights") << "calling LumiWeights done";
 //   using namespace edm;
    std::vector<double> weights; 
